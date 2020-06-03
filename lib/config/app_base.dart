@@ -1,0 +1,1 @@
+const String BASE_URL = 'http://lorrystand.tihalt.in/api';
