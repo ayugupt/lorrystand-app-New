@@ -4,16 +4,19 @@ import 'package:lorrystand/pages/BookingPage.dart';
 import 'package:provider/provider.dart';
 import 'package:lorrystand/providers/user_provider.dart';
 import 'package:lorrystand/widgets/BookingStatusWidget.dart';
+import 'package:lorrystand/widgets/bidding.dart';
 
 class BookingWidgetTransporter extends StatefulWidget {
   final booking;
 
   BookingWidgetTransporter({this.booking});
   @override
-  _BookingWidgetTransporterState createState() => _BookingWidgetTransporterState();
+  _BookingWidgetTransporterState createState() =>
+      _BookingWidgetTransporterState();
 }
 
 class _BookingWidgetTransporterState extends State<BookingWidgetTransporter> {
+  Color color2 = new Color(0xfffed226);
 
   @override
   void initState() {
@@ -21,44 +24,44 @@ class _BookingWidgetTransporterState extends State<BookingWidgetTransporter> {
     super.initState();
   }
 
-   //FullScreenDialog _myDialog = new FullScreenDialog();
+  //FullScreenDialog _myDialog = new FullScreenDialog();
 
   @override
   Widget build(BuildContext context) {
-
-    return  Container(
+    return Container(
         padding: const EdgeInsets.all(10.0),
         child: GestureDetector(
-          onTap : () {
+          onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => BookingPage(id : widget.booking['id'])),
+              MaterialPageRoute(
+                  builder: (context) => Bidding(widget
+                      .booking) /*BookingPage(id : widget.booking['id'])*/),
             );
           },
-          child:  Card(
+          child: Card(
             child: Container(
                 padding: const EdgeInsets.all(15.0),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Row(
-                          children: <Widget>[
-                        Text(
-                            "Ship#${widget.booking['booking_no']}",
+                      Row(children: <Widget>[
+                        Text("Ship#${widget.booking['booking_no']}",
                             style: Theme.of(context).textTheme.headline2),
                         Padding(
                           child: Row(children: <Widget>[
                             Text("Customer Budget - ",
                                 style: TextStyle(
                                     color: Colors.black,
-                                    fontWeight: FontWeight.bold,fontSize: 10)),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 10)),
                             Text(
                               "₹${widget.booking['enquiry_amount']}",
-                              style: TextStyle(fontSize: 19,fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                  fontSize: 19, fontWeight: FontWeight.bold),
                             )
                           ]),
-                          padding: EdgeInsets.only(
-                              top: 10),
+                          padding: EdgeInsets.only(top: 10),
                         )
                       ], mainAxisAlignment: MainAxisAlignment.spaceBetween),
                       SizedBox(
@@ -141,8 +144,11 @@ class _BookingWidgetTransporterState extends State<BookingWidgetTransporter> {
                               ),
                               widget.booking['source_city'] == null
                                   ? Text("")
-                                  : Text("${widget.booking['source_city']['name']}",
-                                  style: Theme.of(context).textTheme.headline4),
+                                  : Text(
+                                      "${widget.booking['source_city']['name']}",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline4),
                             ],
                           ),
                           Row(
@@ -155,14 +161,15 @@ class _BookingWidgetTransporterState extends State<BookingWidgetTransporter> {
                               SizedBox(
                                 width: 5,
                               ),
-                widget.booking['scheduled_date'] == null
-                    ? Text("")
-                    : Text("${widget.booking['scheduled_date']}",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 14),
-                              )
+                              widget.booking['scheduled_date'] == null
+                                  ? Text("")
+                                  : Text(
+                                      "${widget.booking['scheduled_date']}",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 14),
+                                    )
                             ],
                           )
                         ],
@@ -193,8 +200,10 @@ class _BookingWidgetTransporterState extends State<BookingWidgetTransporter> {
                               ),
                               widget.booking['destination_city'] == null
                                   ? Text("")
-                                  : Text("${widget.booking['destination_city']['name']}",
-                                  style: Theme.of(context).textTheme.headline4)
+                                  : Text(
+                                      "${widget.booking['destination_city']['name']}",
+                                      style:
+                                          Theme.of(context).textTheme.headline4)
                             ],
                           ),
                         ],
@@ -214,18 +223,23 @@ class _BookingWidgetTransporterState extends State<BookingWidgetTransporter> {
                               Text("Posted on: "),
                               widget.booking['created_at'] == null
                                   ? Text("")
-                                  : Text("${widget.booking['created_at']}",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w600),
-                              )
+                                  : Text(
+                                      "${widget.booking['created_at']}",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w600),
+                                    )
                             ],
                           ),
                           RaisedButton(
-                            onPressed: (){
+                            onPressed: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => BookingPage(id : widget.booking['id'])),
+                                MaterialPageRoute(
+                                    builder: (context) => Bidding(widget
+                                        .booking) /*BookingPage(
+                                        id: widget.booking['id'])*/
+                                    ),
                               );
                             },
                             color: Colors.amber,
@@ -239,8 +253,7 @@ class _BookingWidgetTransporterState extends State<BookingWidgetTransporter> {
                       )
                     ])),
             elevation: 10,
-          ) ,
-        )
-    );
+          ),
+        ));
   }
 }

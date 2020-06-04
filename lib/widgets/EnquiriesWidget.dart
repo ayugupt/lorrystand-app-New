@@ -16,7 +16,6 @@ class EnquiriesWidget extends StatefulWidget {
 }
 
 class _EnquiriesWidgetState extends State<EnquiriesWidget> {
-
   var bookingProvider;
   bool _isLoading = true;
 
@@ -28,9 +27,10 @@ class _EnquiriesWidgetState extends State<EnquiriesWidget> {
   @override
   void didChangeDependencies() {
     if (_isLoading) {
-      bookingProvider = Provider.of<EnquiryProvider>(context);    
+      bookingProvider = Provider.of<EnquiryProvider>(context);
       bookingProvider.list();
-      print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+      print(
+          "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
     }
     _isLoading = false;
     super.didChangeDependencies();
@@ -38,10 +38,9 @@ class _EnquiriesWidgetState extends State<EnquiriesWidget> {
 
   @override
   Widget build(BuildContext context) {
-    
-    return  new ListView.builder(
-      itemCount: bookingProvider.enquires.length,
-      itemBuilder: (context, i) => BookingWidgetTransporter(booking : bookingProvider.enquires[i])
-    );
+    return new ListView.builder(
+        itemCount: bookingProvider.enquires.length,
+        itemBuilder: (context, i) =>
+            BookingWidgetTransporter(booking: bookingProvider.enquires[i]));
   }
 }

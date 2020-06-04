@@ -5,14 +5,14 @@ import 'package:lorrystand/providers/trip_provider.dart';
 import 'package:lorrystand/widgets/TripWidget.dart';
 
 class TripsWidget extends StatefulWidget {
+  String status;
 
-  TripsWidget();
+  TripsWidget(this.status);
   @override
   _TripsWidgetState createState() => _TripsWidgetState();
 }
 
 class _TripsWidgetState extends State<TripsWidget> {
-
   var tripProvider;
   var userProvider;
   bool _isLoading = true;
@@ -23,10 +23,10 @@ class _TripsWidgetState extends State<TripsWidget> {
   }
 
   @override
-  void didChangeDependencies() async{
+  void didChangeDependencies() async {
     if (_isLoading) {
-      tripProvider = Provider.of<TripProvider>(context);  
-      await tripProvider.list();  
+      tripProvider = Provider.of<TripProvider>(context);
+      await tripProvider.list();
     }
     setState(() {
       _isLoading = false;
@@ -36,10 +36,10 @@ class _TripsWidgetState extends State<TripsWidget> {
 
   @override
   Widget build(BuildContext context) {
-
-    return  new ListView.builder(
+    return new ListView.builder(
       itemCount: tripProvider.trips.length,
-      itemBuilder: (context, i) => TripWidget(booking : tripProvider.trips[i])     
+      itemBuilder: (context, i) =>
+          TripWidget(booking: tripProvider.trips[i], status: widget.status),
     );
   }
 }

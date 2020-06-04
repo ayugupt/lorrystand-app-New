@@ -2,15 +2,19 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:lorrystand/widgets/network_image.dart';
 
-
 import 'package:provider/provider.dart';
-import 'package:lorrystand/providers/user_provider.dart'; 
+import 'package:lorrystand/providers/user_provider.dart';
+
+import 'package:lorrystand/config/app_config.dart' as config;
 
 class ProfilePage extends StatelessWidget {
+  Color color1 = new Color(0xff212732);
+  Color color2 = new Color(0xfffed226);
+
   static final String path = "lib/src/pages/profile/profile3.dart";
   final image = "";
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     var userProvider = Provider.of<UserProvider>(context);
     userProvider.getProfile();
     return Scaffold(
@@ -24,18 +28,28 @@ class ProfilePage extends StatelessWidget {
             //   child: Container(color: Colors.lightGreen,)//PNetworkImage(image, fit: BoxFit.cover,),
             // ),
             Container(
-              margin: EdgeInsets.fromLTRB(16.0, kToolbarHeight + 40, 16.0, 16.0),
+              width: config.App(context).appWidth(100),
+              height: config.App(context).appHeight(60),
+              child: ClipPath(
+                child: Container(
+                  color: color1,
+                ),
+                clipper: Design(),
+              ),
+            ),
+            Container(
+              margin:
+                  EdgeInsets.fromLTRB(16.0, kToolbarHeight + 40, 16.0, 16.0),
               child: Column(
                 children: <Widget>[
                   Stack(
                     children: <Widget>[
                       Container(
                         padding: EdgeInsets.all(16.0),
-                       // margin: EdgeInsets.only(top: 16.0),
+                        // margin: EdgeInsets.only(top: 16.0),
                         decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(5.0)
-                        ),
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(5.0)),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
@@ -44,10 +58,15 @@ class ProfilePage extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  Text("${userProvider.fullName}", style: Theme.of(context).textTheme.headline6,),
+                                  Text(
+                                    "${userProvider.fullName}",
+                                    style:
+                                        Theme.of(context).textTheme.headline6,
+                                  ),
                                   ListTile(
                                     contentPadding: EdgeInsets.all(0),
-                                    title: Text("${userProvider.userRole.toUpperCase()}"),
+                                    title: Text(
+                                        "${userProvider.userRole.toUpperCase()}"),
                                   ),
                                 ],
                               ),
@@ -82,17 +101,15 @@ class ProfilePage extends StatelessWidget {
                         height: 80,
                         width: 80,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.0),
-                          image: DecorationImage(
-                            image: NetworkImage("https://via.placeholder.com/150"),
-                            fit: BoxFit.cover
-                          )
-                        ),
-                        margin: EdgeInsets.only(left: 16.0 , top: 10.0),
-                        ),
-                    ],  
+                            borderRadius: BorderRadius.circular(10.0),
+                            image: DecorationImage(
+                                image: NetworkImage(
+                                    "https://via.placeholder.com/150"),
+                                fit: BoxFit.cover)),
+                        margin: EdgeInsets.only(left: 16.0, top: 10.0),
+                      ),
+                    ],
                   ),
-
                   SizedBox(height: 20.0),
                   Container(
                     decoration: BoxDecoration(
@@ -101,7 +118,9 @@ class ProfilePage extends StatelessWidget {
                     ),
                     child: Column(
                       children: <Widget>[
-                        ListTile(title: Text("User information"),),
+                        ListTile(
+                          title: Text("User information"),
+                        ),
                         Divider(),
                         ListTile(
                           title: Text("Email"),
@@ -116,18 +135,51 @@ class ProfilePage extends StatelessWidget {
                       ],
                     ),
                   )
-                  
                 ],
               ),
             ),
             AppBar(
               //backgroundColor: Colors.green,
-              title: Text('Profile'),
+              title: Container(
+                child: Text('Profile',
+                    style: TextStyle(
+                        color: color1,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold)),
+                padding:
+                    EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+                color: color2,
+              ),
               elevation: 0,
+              backgroundColor: color1,
+              iconTheme: IconThemeData(color: color2),
+              centerTitle: true,
             )
           ],
         ),
       ),
     );
+  }
+}
+
+class Design extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    Path path = new Path();
+    path.lineTo(0, 0);
+    path.lineTo(0, size.height * 0.95);
+    /*path.conicTo(
+        size.width * 0.05, size.height, size.width, size.height * 0.6, 1);*/
+    path.cubicTo(size.width * 0.15, size.height, size.width * 0.5,
+        size.height * 0.7, size.width, size.height * 0.65);
+    path.lineTo(size.width, 0);
+    path.lineTo(0, 0);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(oldDelegate) {
+    return false;
   }
 }
